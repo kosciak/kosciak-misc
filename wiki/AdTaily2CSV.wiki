@@ -6,6 +6,14 @@
 Imports [http://adtaily.com/ AdTaily] catalogue and saves it as CSV file
 
 
+= Download =
+
+Check the [http://code.google.com/p/kosciak-misc/downloads/list Downloads] section or checkout the source from Subversion repository using
+{{{
+svn checkout http://kosciak-misc.googlecode.com/svn/python/adtaily2csv/trunk/ adtaily2csv
+}}}
+
+
 = Usage =
 
 Just run the script with catalogue number as an argument. For example if you want to import 'Komputery i Internet' (http://www.adtaily.com/networks/6/websites) catalogue just run
