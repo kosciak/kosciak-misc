@@ -1,0 +1,14 @@
+#summary AdTaily2CSV
+
+= Introduction =
+
+Imports [http://adtaily.com/ AdTaily] catalogue and saves it as CSV file
+
+
+= Usage =
+
+Just run the script with catalogue number as an argument. For example if you want to import 'Komputery i Internet' (http://www.adtaily.com/networks/6/websites) catalogue just run
+{{{
+./adtaily2csv.py 6
+}}}
+Script will generate adtaily_6.csv that can be imported by MS Excel or OOo Calc
