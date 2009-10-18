@@ -25,5 +25,8 @@ Script will generate adtaily_6.csv that can be imported by MS Excel or OOo Calc.
 
 = Changelog =
 
-0.2 - fixed how CPM is calculated
-0.1 - initial release
+0.2
+  * fixed how CPM is calculated
+
+0.1
+  * initial release
