@@ -20,4 +20,10 @@ Just run the script with catalogue number as an argument. For example if you wan
 {{{
 ./adtaily2csv.py 6
 }}}
-Script will generate adtaily_6.csv that can be imported by MS Excel or OOo Calc
+Script will generate adtaily_6.csv that can be imported by MS Excel or OOo Calc. When importing select UTF-8 encoding and Tab as an separator!
+
+
+= Changelog =
+
+0.2 - fixed how CPM is calculated
+0.1 - initial release
