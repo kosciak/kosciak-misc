@@ -42,7 +42,7 @@ def parse_page(writer, catalogue, page=1):
         # calculate CPM
         cpm = '?'
         try:
-            cpm = float(price) / int(stats) * 1000
+            cpm = (float(price)*30) / int(stats) * 1000
         except:
             cpm = '?'
         
