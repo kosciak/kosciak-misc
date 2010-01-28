@@ -25,7 +25,7 @@ Options:
   -R, --recursive       Include subdirectories (disabled by default).
 
 }}}
-Script will generate index.html for directory (and subdirectories if run in recursive mode). Hidden files on *nix systems (name starting with '.') are automatically commited.
+Script will generate index.html for directory (and subdirectories if run in recursive mode). Hidden files on Linux (filename starting with '.') are automatically commited.
 ATTENTION! Script will overwrite existing index.html file without asking for permission!
 
 
