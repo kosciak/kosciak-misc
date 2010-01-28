@@ -1,0 +1,47 @@
+#summary dropbox-index usage information
+#labels Featured
+
+= Introduction =
+
+Creates index.html for directory contents shared publicly on [https://www.dropbox.com/referrals/NTY5ODQzOQ Dropbox]. That way you can easily share whole content of the directory without the need to send separate links for all the shared files.
+
+
+= Download =
+
+Check the [http://code.google.com/p/kosciak-misc/downloads/list Downloads] section or checkout the source from Subversion repository using
+{{{
+svn checkout http://kosciak-misc.googlecode.com/svn/python/dropbox-index/trunk/ dropbox-index
+}}}
+
+
+= Usage =
+
+Just run this Python script with directory as an argument (and add -R as an option if you want to include subdirectories)
+{{{
+Usage: dropbox-index.py [options] <directory>
+
+Options:
+  -h, --help            Show help message and exit.
+  -R, --recursive       Include subdirectories (disabled by default).
+
+}}}
+Script will generate index.html for directory (and subdirectories if run in recursive mode).
+ATTENTION! Script will overwrite existing index.html file without asking for permission!
+
+
+= Screenshot =
+
+Just check the shared folder containing icons and screenshot:
+
+[http://dl.dropbox.com/u/69843/dropbox-index/index.html http://dl.dropbox.com/u/69843/dropbox-index/screenshot/dropbox-index.png]
+
+
+= Icons =
+
+I have used icons from [http://www.famfamfam.com/lab/icons/silk/ famfamfam's "Silk" icon set]
+
+
+= Changelog =
+
+0.1
+  * initial release
