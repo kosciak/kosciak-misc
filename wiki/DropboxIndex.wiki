@@ -43,6 +43,8 @@ I have used icons from [http://www.famfamfam.com/lab/icons/silk/ famfamfam's "Si
 
 
 = Changelog =
+0.2.1
+  * small bugfix for Chrome browser
 
 0.2
   * code cleanup
