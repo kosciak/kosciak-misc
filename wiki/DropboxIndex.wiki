@@ -44,5 +44,10 @@ I have used icons from [http://www.famfamfam.com/lab/icons/silk/ famfamfam's "Si
 
 = Changelog =
 
+0.2
+  * code cleanup
+  * CSS tweaks
+  * filetype recognition and different icons for different filetypes groups
+
 0.1
   * initial release
