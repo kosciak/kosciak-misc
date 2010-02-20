@@ -14,6 +14,12 @@ svn checkout http://kosciak-misc.googlecode.com/svn/python/dropbox-index/trunk/ 
 }}}
 
 
+= Requirements =
+
+Script was tested on Linux but should work on all operating systems with *Python <= 2.6 installed*.
+
+Generated {{{index.html}}} pages were tested on Linux with Chrome 4.x, Firefox 3.0.x, and Opera 10.x 
+
 = Usage =
 
 Just run this Python script with directory as an argument (and add -R as an option if you want to include subdirectories)
@@ -22,12 +28,35 @@ Usage: dropbox-index.py [options] <directory>
 
 Options:
   -h, --help            Show help message and exit.
+  -V, --version         print version information
   -R, --recursive       Include subdirectories (disabled by default).
+  -T, --template <file> Use HTML file as template.
 
+
+Example: 
+./dropbox-index.py -R -T template.html ~/Dropbox/Public/show
 }}}
-Script will generate index.html for directory (and subdirectories if run in recursive mode). Hidden files on Linux (filename starting with '.') are automatically commited.
+Script will generate {{{index.html}}} for directory (and subdirectories if run in recursive mode). Hidden files on Linux (filename starting with '.') are automatically omited.
 
-*ATTENTION!* Script will overwrite existing index.html file without asking for permission!
+If a directory contains a file with {{{dir-info}}} in it's name ({{{dir-name, .dir-name, dir-name.txt, dir-name.html}}}, - all these names are valid) the contents of the file will be used in the {{{index.html}}} as and additional information about directory content.
+
+From version 0.4 you can click on the table's headings to sort files by name, size, or date (in ascending and descending order).
+
+*ATTENTION!* Script will overwrite any existing index.html file without asking for permission!
+
+
+= Template =
+
+Templates can be used to generate custom {{{index.html}}} files. Selected template is uded to generate all pages, including subdirectories if the script is run i recursive mode.
+
+Templates are just regular HTML files. CSS styles and JavaScript code will be automatically inject. The table with the files list will be injected in place of {{{%(FILES)s}}}
+
+You can use (names are *case sensitive!*):
+  * {{{%(FILES)s}}} - must be included or the files list won't be injected!
+  * {{{%(FAVICON)s}}} - place it inside {{{<head>}}} if you want Dropbox-favicon to be used
+  * {{{%(ENCODING)s}}} - system encoding identified by the script
+  * {{{%(PATH)s}}} - name of the directory
+  * {{{%(DIR_INFO)s}}} - place for additional directory information (from {{{dir-info}}} files
 
 
 = Screenshot =
@@ -42,7 +71,20 @@ Just check the shared folder containing icons and screenshot:
 I have used icons from [http://www.famfamfam.com/lab/icons/silk/ famfamfam's "Silk" icon set]
 
 
+= Authors =
+
+  * [http://kosciak.blox.pl/ Wojciech 'KosciaK' Pietrzok]
+  * Tommy MacWilliam - introduced template system
+
 = Changelog =
+
+0.4
+  * added template system
+
+0.3
+  * added sorting of files using jQuery
+  * added dir-info 
+
 0.2.1
   * small bugfix for Chrome browser
 
