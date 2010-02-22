@@ -38,7 +38,7 @@ Example:
 }}}
 Script will generate {{{index.html}}} for directory (and subdirectories if run in recursive mode). Hidden files on Linux (filename starting with '.') are automatically omited.
 
-If a directory contains a file with {{{dir-info}}} in it's name ({{{dir-name, .dir-name, dir-name.txt, dir-name.html}}}, - all these names are valid) the contents of the file will be used in the {{{index.html}}} as and additional information about directory content.
+If a directory contains a file with {{{dir-info}}} in it's name ({{{dir-name,  dir-name.txt, dir-name.html}}}, - all these names are valid) the contents of the file will be used in the {{{index.html}}} as and additional information about directory content.
 
 From version 0.4 you can click on the table's headings to sort files by name, size, or date (in ascending and descending order).
 
