@@ -16,7 +16,7 @@ svn checkout http://kosciak-misc.googlecode.com/svn/python/dropbox-index/trunk/ 
 
 = Requirements =
 
-Script was tested on Linux but should work on all operating systems with *Python <= 2.6 installed*.
+Script was tested on Linux but should work on all operating systems with *Python <= 2.6 installed*. Users have informed that it runs on Windows with Activestate's ActivePython 2.6 and on MacOSX.
 
 Generated {{{index.html}}} pages were tested on Linux with Chrome 4.x, Firefox 3.0.x, and Opera 10.x 
 
