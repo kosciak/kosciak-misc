@@ -13,8 +13,10 @@ def main(scrn):
     border.addstr(1,1, "border")
     
     background = scrn.subwin(3,14, 0,15)
-    background.bkgd("#")
-    background.addstr(1,2, "background", curses.A_NORMAL)
+    curses.init_pair(7, curses.COLOR_RED, curses.COLOR_GREEN)
+    curses.init_pair(8, curses.COLOR_BLUE, curses.COLOR_WHITE)
+    background.bkgd("#", curses.color_pair(7))
+    background.addstr(1,2, "background", curses.color_pair(8))
     background.refresh
     
     lines = scrn.subwin(3,11, 0,30)
