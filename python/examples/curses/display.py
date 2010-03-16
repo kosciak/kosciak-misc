@@ -19,7 +19,14 @@ def main(scrn):
     background.addstr(1,2, "background", curses.color_pair(8))
     background.refresh
     
-    lines = scrn.subwin(3,11, 0,30)
+    background2 = scrn.subwin(4,14, 0,30)
+    background2.bkgdset("#")
+    background2.addstr("              ")
+    background2.addstr("  background  ")
+    background2.addstr("              ")
+    
+    
+    lines = scrn.subwin(3,11, 0,45)
     lines.hline(1,0, curses.ACS_HLINE, 11)
     lines.vline(0,2, curses.ACS_VLINE, 3)
     lines.vline(0,8, curses.ACS_VLINE, 3)
@@ -27,7 +34,7 @@ def main(scrn):
     lines.addch(1,2, curses.ACS_SSSS)
     lines.addch(1,8, curses.ACS_SSSS)
     
-    text = scrn.subwin(10,9, 3,0)
+    text = scrn.subwin(10,9, 4,0)
     text.addstr(0,0, "dim", curses.A_DIM)
     text.addstr(1,0, "normal", curses.A_NORMAL)
     text.addstr(2,0, "underline", curses.A_UNDERLINE)
@@ -47,7 +54,7 @@ def main(scrn):
     text.addch("o", curses.color_pair(2) | curses.A_BOLD)
     text.addch("r", curses.color_pair(1) | curses.A_BOLD)
     
-    scrn.addstr(13,0, curses.termname())
+    scrn.addstr(15,0, curses.termname())
     scrn.addstr(": " + curses.longname())
     
     scrn.getch()
