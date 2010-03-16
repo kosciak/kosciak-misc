@@ -27,6 +27,10 @@ def main(scrn):
         for foreground in range(0,8):
             scrn.addstr("##", curses.color_pair(foreground|background<<3) | curses.A_STANDOUT)
             scrn.addstr("##", curses.color_pair(foreground|background<<3) | curses.A_BOLD | curses.A_STANDOUT)
+        scrn.move(background+9, 40)
+        for foreground in range(0,8):
+            scrn.addstr("##", curses.color_pair(foreground|background<<3) | curses.A_REVERSE)
+            scrn.addstr("##", curses.color_pair(foreground|background<<3) | curses.A_BOLD | curses.A_REVERSE)
             
     scrn.getch()
 
