@@ -51,11 +51,13 @@ def main(scrn):
     
     for i in range(0,10):
         win.addstr(i,0, str(i))
-        logging.info("Now i = " + str(i))
         win.refresh()
+        curses.delay_output(250)
+        logging.info("Now i = " + str(i))
         
     win.getch()
 
 
 if __name__ == "__main__":
     curses.wrapper(main)
+
