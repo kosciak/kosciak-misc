@@ -18,8 +18,8 @@ set "hinttags=//*[@onclick or @onmouseover or @onmousedown or @onmouseup or @onc
 set guioptions=rbn
 set newtab=downloads
 
-set nextpattern=^następn,\bnext,^>$,^(>>|»)$,^(>|»),(>|»)$,\bmore\b
-set previouspattern=^poprzedni,\bprev|previous\b,^<$,^(<<|«)$,^(<|«),(<|«)$
+set nextpattern=\\bnastępn,\\bnext,^>$,^(>>|»)$,^(>|»),(>|»)$,\\bmore\\b
+set previouspattern=\\bpoprzedni,\\bprev|previous\\b,^<$,^(<<|«)$,^(<|«),(<|«)$
 
 set scroll=8
 
