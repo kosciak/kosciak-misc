@@ -35,6 +35,21 @@ Opcje:
   -B, --blog <blog>      Nazwa bloga do pobrania
 }}}
 
+Skrypt utworzy w bieżącym katalogu folder z nazwą bloga o strukturze:
+{{{
+/nazwa_bloga
+  /2010
+    /01
+      /tytul_notki.html
+  /index.html
+  /resources.html
+}}}
+Plik `index.html` zawiera spis wszystkich wpisów w kolejności chronologicznej. Plik `resources.txt` zawiera spis wszystkich użytych obrazów oraz plików znajdujących się w zasobach Blox. By je ściągnąć polecam użycie programu `wget`:
+{{{
+wget -i resources.txt -P resource
+}}}
+Pliki zostaną ściągnięte na dysk i umieszczone w folderze `/resource`
+
 = Znane błędy =
 
 W systemie Windows wyświetlają się krzaczki zamiast polskich liter
