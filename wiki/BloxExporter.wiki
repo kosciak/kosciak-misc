@@ -52,7 +52,9 @@ Pliki zostaną ściągnięte na dysk i umieszczone w folderze `/resource`
 
 = Znane błędy =
 
-W systemie Windows wyświetlają się krzaczki zamiast polskich liter
+  * W systemie Windows wyświetlają się krzaczki zamiast polskich liter
+  * Brak obsługi tagów, komentarzy, trackbacków
+  * Generowane strony to praktycznie czysty HTML, nie wyglądają zbyt pięknie
 
 = Changelog =
 
