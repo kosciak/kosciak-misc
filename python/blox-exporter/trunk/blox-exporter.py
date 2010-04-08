@@ -17,7 +17,7 @@
 #
 
 __author__ = "Wojciech 'KosciaK' Pietrzok (kosciak@kosciak.net)"
-__version__ = "0.1"
+__version__ = "0.1.1"
 
 import os
 import sys
