@@ -1,0 +1,45 @@
+#summary blox-exporter - informacje
+
+= O skrypcie =
+
+Skrypt służy do tworzenia kopii zapasowych zawartości bloga znajdującego się na platformie Blox.pl
+
+
+= Pobieranie =
+
+Pobierz archiwum z działu [http://code.google.com/p/kosciak-misc/downloads/list Downloads] lub pobierz skrypt z repozytorium Subversion
+{{{
+svn checkout http://kosciak-misc.googlecode.com/svn/python/blox-exporter/trunk/ blox-exporter
+}}}
+
+
+= Wymagania =
+
+Do poprawnego działania skryptu wymagane jest zainstalowanie środowiska Python. Skrypt był testowany na Linuksie z użyciem Python 2.5 i Windowsie z użyciem Python 2.6
+
+
+= Sposób użycia =
+
+Po prostu uruchom skrypt, jeśli nie podasz loginu, hasła, nazwy bloga jako argument wywołania, skrypt poprosi o wpisanie odpowiednich danych. Przy pytaniu o pobranie bloga wpisanie odpowiedzi innej niż `t` lub `tak` (wielkość liter nie ma znaczenia) anuluje pobieranie danego bloga.
+
+{{{
+Użycie: blox-exporter.py [opcje]
+Przykład: blox-exporter.py -L login -P hasło -B blog1
+
+Opcje:
+  -H, --help             Pokaż pomoc i zakończ działanie
+  -V, --version          Pokaż wersję skryptu
+  -L, --login <login>    Login dla blox.pl
+  -P, --password <hasło> Hasło dla blox.pl
+  -A, --all              Pobierz wszystkie blogi
+  -B, --blog <blog>      Nazwa bloga do pobrania
+}}}
+
+= Znane błędy =
+
+W systemie Windows wyświetlają się krzaczki zamiast polskich liter
+
+= Changelog =
+
+0.1
+  * pierwsze wydanie
