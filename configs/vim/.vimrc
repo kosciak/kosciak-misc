@@ -108,6 +108,7 @@ if has("autocmd")
   autocmd BufRead *.txt setfiletype text
 
   autocmd FileType text setlocal linebreak
+  autocmd FileType svn setlocal nonumber
 
   " When editing a file, always jump to the last known cursor position.
   " Don't do it when the position is invalid or when inside an event handler
