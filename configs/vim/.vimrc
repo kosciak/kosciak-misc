@@ -54,9 +54,11 @@ set mouse=a			" turn mouse on
 
 set number			" line numbers
 set showmatch		" show matching brackets
+
+set wrap
 set display+=lastline	" display as much of the last line as possible
 
-" Spellchecking: english and polish, show 10 best propositions
+" Spellchecking: English and Polish, show 10 best suggestions
 set spelllang=en,pl
 set spellsuggest=best,10
 
@@ -75,7 +77,13 @@ set guifont=Monospace\ 9
 set tabstop=4
 set shiftwidth=4
 "set expandtab
+set smarttab
 
+set listchars=tab:→\ ,eol:¶,extends:>,precedes:<,trail:·,nbsp:°
+"set list
+
+set autoindent
+set smartindent
 
 " ----------------------------------------------------------------------
 "  Windows, tabs, buffers
