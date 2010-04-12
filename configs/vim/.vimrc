@@ -92,8 +92,10 @@ if has("autocmd")
   filetype plugin on	" enable file type detection
   filetype indent on	" load indent files
 
-  augroup vimrcEx		" separate autocmd group
-  au!					" delete previous settings for this group
+  " separate autocmd group
+  augroup vimrcEx
+  " delete previous settings for this group
+  au!			
 
   autocmd BufRead *.txt setfiletype text
 
