@@ -56,6 +56,7 @@ set number			" line numbers
 set showmatch		" show matching brackets
 
 set wrap
+set linebreak
 set display+=lastline	" display as much of the last line as possible
 
 " Spellchecking: English and Polish, show 10 best suggestions
@@ -76,7 +77,7 @@ set guifont=Monospace\ 9
 
 set tabstop=4
 set shiftwidth=4
-"set expandtab
+set expandtab
 set smarttab
 
 set listchars=tab:→\ ,eol:¶,extends:>,precedes:<,trail:·,nbsp:°
@@ -107,7 +108,8 @@ if has("autocmd")
 
   autocmd BufRead *.txt setfiletype text
 
-  autocmd FileType text setlocal linebreak
+  autocmd FileType text setlocal nonumber noexpandtab
+  autocmd FileType vim setlocal noexpandtab
   autocmd FileType svn setlocal nonumber
 
   " When editing a file, always jump to the last known cursor position.
