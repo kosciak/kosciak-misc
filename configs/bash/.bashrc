@@ -91,6 +91,7 @@ if [ -x /usr/bin/dircolors ]; then
     #alias egrep='egrep --color=auto'
 
 	alias diff='colordiff'
+    alias svn='colorsvn'
 fi
 
 # some more ls aliases
@@ -105,13 +106,13 @@ if [ -f /etc/bash_completion ]; then
     . /etc/bash_completion
 fi
 
-alias less='less -MgR'
+alias less='less -Mgr'
 
 # Less Colors for Man Pages
 export LESS_TERMCAP_mb=$'\E[01;31m'       # begin blinking
 export LESS_TERMCAP_md=$'\E[01;38;5;74m'  # begin bold
 export LESS_TERMCAP_me=$'\E[0m'           # end mode
 export LESS_TERMCAP_se=$'\E[0m'           # end standout-mode
-export LESS_TERMCAP_so=$'\E[38;5;246m'    # begin standout-mode - info box
+export LESS_TERMCAP_so=$'\E[33;01;44m'    # begin standout-mode - info box
 export LESS_TERMCAP_ue=$'\E[0m'           # end underline
 export LESS_TERMCAP_us=$'\E[04;38;5;146m' # begin underline
