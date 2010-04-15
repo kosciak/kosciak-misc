@@ -57,6 +57,8 @@ set showmatch		" show matching brackets
 
 set wrap
 set linebreak
+set cpoptions+=n
+set showbreak=>>>\ 
 set display+=lastline	" display as much of the last line as possible
 
 " Spellchecking: English and Polish, show 10 best suggestions
@@ -77,6 +79,7 @@ set guifont=Monospace\ 9
 
 set tabstop=4
 set shiftwidth=4
+set shiftround
 set expandtab
 set smarttab
 
@@ -108,9 +111,9 @@ if has("autocmd")
 
   autocmd BufRead *.txt setfiletype text
 
-  autocmd FileType text setlocal nonumber noexpandtab
+  autocmd FileType text setlocal noexpandtab
   autocmd FileType vim setlocal noexpandtab
-  autocmd FileType svn setlocal nonumber
+  autocmd FileType svn setlocal noexpandtab
 
   " When editing a file, always jump to the last known cursor position.
   " Don't do it when the position is invalid or when inside an event handler
