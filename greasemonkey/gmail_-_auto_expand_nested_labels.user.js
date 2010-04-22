@@ -36,7 +36,7 @@ var autoExpand = [''];
 
 var click = function(node) {
     var button = node.firstChild.firstChild;
-    if (button.className.indexOf('Rtcnze') >= 0) {
+    if (button.className.indexOf('TI') >= 0) {
 //        var evt = document.createEvent("MouseEvents");
 //        evt.initMouseEvent("click", true, true, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
         var evt = document.createEvent("MouseEvents");
@@ -66,7 +66,7 @@ var init = function() {
     }
     
     var canvas = document.getElementById('canvas_frame').contentDocument;
-    var result = canvas.evaluate('//div[@class="Mdjed"]', canvas, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE , null);
+    var result = canvas.evaluate('//div[@class="TK"]', canvas, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE , null);
     
     if (result.snapshotLength < 2) {
         setTimeout(init, 500);
