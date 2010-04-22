@@ -3,7 +3,7 @@
 // @namespace      http://userscripts.org/users/20935
 // @description    Auto expand Nested Labels in Gmail
 // @author         Wojciech 'KosciaK' Pietrzok
-// @version        0.1
+// @version        0.1.1
 // @include        https://mail.google.*/mail/*
 // @include        http://mail.google.*/mail/*
 // @include        https://mail.google.*/a/*
