@@ -86,7 +86,7 @@ esac
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
     eval "`dircolors -b`"
-    alias ls='ls --color=auto'
+    alias ls='ls --color=auto -x'
     #alias dir='dir --color=auto'
     #alias vdir='vdir --color=auto'
 
@@ -99,8 +99,8 @@ if [ -x /usr/bin/dircolors ]; then
 fi
 
 # some more ls aliases
-#alias ll='ls -l'
-#alias la='ls -A'
+alias ll='ls -l'
+alias la='ls -A'
 #alias l='ls -CF'
 
 # enable programmable completion features (you don't need to enable
@@ -120,3 +120,6 @@ export LESS_TERMCAP_se=$'\E[0m'           # end standout-mode
 export LESS_TERMCAP_so=$'\E[33;01;44m'    # begin standout-mode - info box
 export LESS_TERMCAP_ue=$'\E[0m'           # end underline
 export LESS_TERMCAP_us=$'\E[04;38;5;146m' # begin underline
+
+# load xterm settings
+xrdb -load ~/.Xdefaults
