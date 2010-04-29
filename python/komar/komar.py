@@ -18,7 +18,7 @@
 
 
 __author__ = "Wojciech 'KosciaK' Pietrzok (kosciak@kosciak.net)"
-__version__ = "0.1"
+__version__ = "0.2"
 
 # TODO:
 #  - Escape chatacter
@@ -53,10 +53,10 @@ class Stack(object):
             raise StopIteration
         return self.data.pop()
     
-    def peek(self):
-        if not self.data:
+    def peek(self, depth=1):
+        if not len(self.data) >= depth:
             return None
-        return self.data[-1]
+        return self.data[-depth]
     
     def pop(self):
         return self.data.pop()
@@ -128,13 +128,19 @@ class KoMarParser(object):
     
     def __start(self, block=None, indent=None):
         line = ''
-        if block == 'li':
-            pass
-        elif block in ('pre', 'ol', 'ul'):
+        
+        if self.__block.peek() == 'li':
+            while self.__inline:
+                line += '</%s>' % self.__inline.pop()
+            if block in ('pre', 'ol', 'ul'):
+                line += '\n'
+        
+        if block in ('pre', 'ol', 'ul'):
             if self.__block.peek() == 'p':
                 line += self.__end()
-        else:
+        elif not block == 'li':
             while self.__block:
+                #print ' > %s' % self.__block.peek()
                 line += self.__end()
         
         if not block:
@@ -225,22 +231,22 @@ class KoMarParser(object):
             if indent > self.__indent.peek():
                 line += self.__start(name, indent) + '\n'
                 
-            if not self.__block.peek() == name:
-                if self.__indent.peek() == indent and self.__block.peek() in ('ol', 'ul'):
+            if self.__block.peek() == 'li':
+                line += self.__end()
+                if not self.__block.peek() == name:
                     line += self.__end()
-                line += self.__start(name, indent) + '\n'
+                    line += self.__start(name, indent) + '\n'
             
             return line + \
                    self.__start('li') + \
-                   INLINE_RE.sub(self.__replace_inline, item) + \
-                   self.__end()
+                   INLINE_RE.sub(self.__replace_inline, item)
             
-        elif not self.__block or self.__block.peek() in ('ol', 'ul'):
+        elif not self.__block or self.__block.peek() in ('ol', 'ul', 'li'):
             return self.__start('p') + \
-                   INLINE_RE.sub(self.__replace_inline, line)
+                   INLINE_RE.sub(self.__replace_inline, line.rstrip('\r\n') + ' ')
             
         else:
-            return INLINE_RE.sub(self.__replace_inline, line)
+            return INLINE_RE.sub(self.__replace_inline, line.rstrip('\r\n') + ' ')
 
 
 if __name__=="__main__":
