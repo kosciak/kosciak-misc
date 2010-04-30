@@ -78,8 +78,9 @@ block_elements = {
     'blockquote': r'(?P<quote_indent>(?:\s*\>)+)\s(?P<quote_text>.*)',
     }
 
-BLOCK_RE = re.compile(r'|'.join([r'^(?<!\\)(?P<%s>%s)$' % (name, char) for name, char in block_elements.iteritems()]) + \
-                      r'|.*')
+BLOCK_RE = re.compile(
+    r'|'.join([r'^(?<!\\)(?P<%s>%s)$' % (name, char) for name, char in block_elements.iteritems()]) + \
+    r'|.*')
 
 END_PRE_RE = re.compile(r'^\}{3,}\s*$')
 
@@ -98,11 +99,15 @@ inline_elements = {
     'a':        r'\[{2}(?P<a_href>.+?)(?:\s*\|\s*(?P<a_description>.+?)\s*)?\]',
     }
 
-INLINE_RE = re.compile(r'(?<!\\)(?P<nowiki>\{{3}(?P<nowiki_contents>.+?\}*)\}{3})|' + \
-                       r'(?<!\\)(?P<br>\\{2})(?!\\)|' + \
-                       r'|'.join([r'(?<!\\)(?P<%s>%s{2})' % (name, char) for name, char in inline_elements.iteritems()]) + \
-                       r'|(?P<escaped>\\[~`^*,/\\[{]{2}|\\[*#=]\s|\\&gt;\s)')
-
+INLINE_RE = re.compile(
+    r'(?<!\\)(?P<nowiki>\{{3}(?P<nowiki_contents>.+?\}*)\}{3})|' + \
+    r'(?P<escaped>\\[*/~`^,{[-]{2}|' +\
+                r'^\s*\\[*#=-]\s|' +\
+                r'\\&gt;\s|' +\
+                r'\\{3,})|' + \
+    r'(?P<br>\\{2})\s*|' + \
+    r'|'.join([r'(?P<%s>%s{2})' % (name, char) for name, char in inline_elements.iteritems()])
+    )
 
 
 class KoMarParser(object):
@@ -119,6 +124,7 @@ class KoMarParser(object):
             line = self.__parse_block(line)
             if line: 
                 output.write(line)
+                self.br_end = line.endswith('<br />\n')
         output.write(self.__start())
     
     
@@ -251,7 +257,7 @@ class KoMarParser(object):
             
             return line + \
                    self.__start('li') + \
-                   self.__parse_inline(item) + ' '
+                   self.__parse_inline(item)
             
         elif name == 'blockquote':
             line = ''
@@ -266,7 +272,7 @@ class KoMarParser(object):
                 line += self.__start(name, (self.__quote_level.peek() or 0) + 1)
             
             return line + \
-                   self.__parse_inline(text) + ' '
+                   self.__parse_inline(text)
             
         else:
             text = line.strip()
@@ -274,9 +280,11 @@ class KoMarParser(object):
             
             if not self.__block:
                 line += self.__start('p')
+            elif not self.br_end:
+                line += ' '
             
             return line + \
-                   self.__parse_inline(text) + ' '
+                   self.__parse_inline(text)
 
 
 if __name__=="__main__":
