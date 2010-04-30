@@ -18,7 +18,7 @@
 
 
 __author__ = "Wojciech 'KosciaK' Pietrzok (kosciak@kosciak.net)"
-__version__ = "0.2"
+__version__ = "0.2.5"
 
 # TODO:
 #  - Escape chatacter
@@ -76,6 +76,7 @@ block_elements = {
     'pre':      r'\{{3,}\s*',
     'ul':       r'(?P<ul_indent>\s*)\*\s(?P<ul_item>.*)',
     'ol':       r'(?P<ol_indent>\s*)#\s(?P<ol_item>.*)',
+    'blockquote': r'(?P<quote_indent>(?:\s*\>)+)\s(?P<quote_text>.*)',
     }
 
 BLOCK_RE = re.compile(r'|'.join([r'(?P<%s>^%s$)' % (name, char) for name, char in block_elements.iteritems()]) + \
@@ -108,62 +109,24 @@ class KoMarParser(object):
     def __init__(self):
         self.__inline = Stack()
         self.__block = Stack()
-        self.__indent = Stack()
+        self.__list_level = Stack()
+        self.__quote_level = Stack()
     
     
     def parse(self, input, output):
         for line in input:
-            line = self.__escape_html(line)
-            line = self.__parse(line)
+            line = self.__parse_block(line)
             if line: 
                 output.write(line)
         output.write(self.__start())
-        
+    
     
     def __escape_html(self, line):
         return line.replace('&', '&amp;') \
                    .replace('<', '&lt;') \
                    .replace('>', '&gt;')
     
-    
-    def __start(self, block=None, indent=None):
-        line = ''
-        
-        if self.__block.peek() == 'li':
-            while self.__inline:
-                line += '</%s>' % self.__inline.pop()
-            if block in ('pre', 'ol', 'ul'):
-                line += '\n'
-        
-        if block in ('pre', 'ol', 'ul'):
-            if self.__block.peek() == 'p':
-                line += self.__end()
-        elif not block == 'li':
-            while self.__block:
-                #print ' > %s' % self.__block.peek()
-                line += self.__end()
-        
-        if not block:
-            return line
-        if block == 'hr':
-            return line + '<hr />\n'
-        if block in ('ol', 'ul'):
-            self.__indent.push(indent)
-        
-        return line + '<%s>' % self.__block.push(block)
-    
-    
-    def __end(self):
-        line = ''
-        while self.__inline:
-            line += '</%s>' % self.__inline.pop()
-        
-        if self.__block.peek() in ('ol', 'ul'):
-            self.__indent.pop()
-        
-        return line + '</%s>\n' % self.__block.pop()
-    
-    
+
     def __replace_inline(self, match):
         name = match.lastgroup
         if name == 'nowiki':
@@ -194,7 +157,52 @@ class KoMarParser(object):
             return '<%s>' % self.__inline.push(name)
     
     
-    def __parse(self, line):
+    def __parse_inline(self, text):
+        text = self.__escape_html(text)
+        return INLINE_RE.sub(self.__replace_inline, text)
+    
+    
+    def __start(self, block='blank', indent=None):
+        line = ''
+        
+        if self.__block.peek() == 'li':
+            while self.__inline:
+                line += '</%s>' % self.__inline.pop()
+        
+        if block in ('pre', 'ol', 'ul', 'blockquote'):
+            if self.__block.peek() == 'p':
+                line += self.__end()
+        elif not block in ('li', 'blockquote'):
+            while self.__block:
+                line += self.__end()
+        
+        if block == 'blank':
+            return line
+        if block == 'hr':
+            return line + '<hr />\n'
+        
+        if block in ('ul', 'ol'):
+            self.__list_level.push(indent)
+        elif block == 'blockquote':
+            self.__quote_level.push(indent)
+        
+        return line + '<%s>' % self.__block.push(block)
+    
+    
+    def __end(self):
+        line = ''
+        while self.__inline:
+            line += '</%s>' % self.__inline.pop()
+        
+        if self.__block.peek() in ('ol', 'ul'):
+            self.__list_level.pop()
+        elif self.__block.peek() == 'blockquote':
+            self.__quote_level.pop()
+        
+        return line + '</%s>\n' % self.__block.pop()
+    
+    
+    def __parse_block(self, line):
         if self.__block.peek() == 'pre':
             if END_PRE_RE.match(line):
                 return self.__end()
@@ -207,9 +215,9 @@ class KoMarParser(object):
             return self.__start(name) + '\n'
            
         elif name == 'header': 
-            text = INLINE_RE.sub(self.__replace_inline, match.group('header_text'))
-            level = len(match.group('header_level'))
-            line = '<h%s>%s</h%s>' % (level, text, level)
+            text = self.__parse_inline(match.group('header_text'))
+            level = min(len(match.group('header_level')), 6)
+            
             return self.__start('h%d' % level) + \
                    text + \
                    self.__end()
@@ -225,10 +233,10 @@ class KoMarParser(object):
             indent = len(match.group('ol_indent') or match.group('ul_indent'))
             line = ''
             
-            while self.__indent.peek() > indent:
+            while self.__list_level.peek() > indent:
                 line += self.__end()
             
-            if indent > self.__indent.peek():
+            if indent > self.__list_level.peek():
                 line += self.__start(name, indent) + '\n'
                 
             if self.__block.peek() == 'li':
@@ -239,14 +247,32 @@ class KoMarParser(object):
             
             return line + \
                    self.__start('li') + \
-                   INLINE_RE.sub(self.__replace_inline, item)
+                   self.__parse_inline(item) + ' '
             
-        elif not self.__block or self.__block.peek() in ('ol', 'ul', 'li'):
-            return self.__start('p') + \
-                   INLINE_RE.sub(self.__replace_inline, line.rstrip('\r\n') + ' ')
+        elif name == 'blockquote':
+            line = ''
+            text = match.group('quote_text')
+            indent = match.group('quote_indent').count('>')
+            while self.__quote_level.peek() > indent:
+                line += self.__end()
+            
+            while indent > self.__quote_level.peek():
+                if self.__quote_level.peek():
+                    line += '\n'
+                line += self.__start(name, (self.__quote_level.peek() or 0) + 1)
+            
+            return line + \
+                   self.__parse_inline(text) + ' '
             
         else:
-            return INLINE_RE.sub(self.__replace_inline, line.rstrip('\r\n') + ' ')
+            text = line.strip()
+            line = ''
+            
+            if not self.__block:
+                line += self.__start('p')
+            
+            return line + \
+                   self.__parse_inline(text) + ' '
 
 
 if __name__=="__main__":
