@@ -18,10 +18,9 @@
 
 
 __author__ = "Wojciech 'KosciaK' Pietrzok (kosciak@kosciak.net)"
-__version__ = "0.2.5"
+__version__ = "0.3"
 
 # TODO:
-#  - Escape chatacter
 #  - font color and size
 #  - video embedding 
 #  - comments 
@@ -72,15 +71,17 @@ class Stack(object):
 block_elements = {
     'header':   r'\s*(?P<header_level>=+)\s(?P<header_text>.+?)\s*=*\s*',
     'blank':    r'\s*',
-    'hr':       r'-{4,}\s*',
+    'hr':       r'\s*-{4,}\s*',
     'pre':      r'\{{3,}\s*',
     'ul':       r'(?P<ul_indent>\s*)\*\s(?P<ul_item>.*)',
     'ol':       r'(?P<ol_indent>\s*)#\s(?P<ol_item>.*)',
     'blockquote': r'(?P<quote_indent>(?:\s*\>)+)\s(?P<quote_text>.*)',
     }
 
-BLOCK_RE = re.compile(r'|'.join([r'(?P<%s>^%s$)' % (name, char) for name, char in block_elements.iteritems()]) + \
+BLOCK_RE = re.compile(r'|'.join([r'^(?<!\\)(?P<%s>%s)$' % (name, char) for name, char in block_elements.iteritems()]) + \
                       r'|.*')
+
+END_PRE_RE = re.compile(r'^\}{3,}\s*$')
 
 
 #
@@ -93,15 +94,15 @@ inline_elements = {
     'code':     r'`',
     'sup':      r'\^',
     'sub':      r',',
-    'br':       r'\\',
     'img':      r'\{{2}(?P<img_src>.+?)(?:\s*\|\s*(?P<img_alt>.+?)\s*)?\}',
     'a':        r'\[{2}(?P<a_href>.+?)(?:\s*\|\s*(?P<a_description>.+?)\s*)?\]',
     }
 
-INLINE_RE = re.compile(r'(?P<nowiki>\{{3}(?P<nowiki_contents>.+?\}*)\}{3})|' + \
-                       r'|'.join([r'(?P<%s>%s{2})' % (name, char) for name, char in inline_elements.iteritems()]))
+INLINE_RE = re.compile(r'(?<!\\)(?P<nowiki>\{{3}(?P<nowiki_contents>.+?\}*)\}{3})|' + \
+                       r'(?<!\\)(?P<br>\\{2})(?!\\)|' + \
+                       r'|'.join([r'(?<!\\)(?P<%s>%s{2})' % (name, char) for name, char in inline_elements.iteritems()]) + \
+                       r'|(?P<escaped>\\[~`^*,/\\[{]{2}|\\[*#=]\s|\\&gt;\s)')
 
-END_PRE_RE = re.compile(r'^\}{3,}\s*$')
 
 
 class KoMarParser(object):
@@ -131,6 +132,9 @@ class KoMarParser(object):
         name = match.lastgroup
         if name == 'nowiki':
             return '%s' % match.group('nowiki_contents')
+        
+        if name == 'escaped':
+            return match.group('escaped')[1:]
         
         if name == 'br':
             return '<br />\n'
