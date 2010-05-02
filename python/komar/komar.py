@@ -117,6 +117,7 @@ class KoMarParser(object):
         self.__block = Stack()
         self.__list_level = Stack()
         self.__quote_level = Stack()
+        self.__line_cont = False
     
     
     def parse(self, input, output):
@@ -124,7 +125,7 @@ class KoMarParser(object):
             line = self.__parse_block(line)
             if line: 
                 output.write(line)
-                self.br_end = line.endswith('<br />\n')
+                self.__line_cont = not line.endswith('>\n')
         output.write(self.__start())
     
     
@@ -172,17 +173,30 @@ class KoMarParser(object):
         return INLINE_RE.sub(self.__replace_inline, text)
     
     
+    def __close_inline(self):
+        line = ''
+        while self.__inline:
+            line += '</%s>' % self.__inline.pop()
+        
+        return line
+    
+    
     def __start(self, block='blank', indent=None):
         line = ''
+        if self.__block.peek() in ('li', 'blockquote'):
+            line += self.__close_inline()
         
-        if self.__block.peek() == 'li':
-            while self.__inline:
-                line += '</%s>' % self.__inline.pop()
-        
-        if block in ('pre', 'ol', 'ul', 'blockquote'):
-            if self.__block.peek() == 'p':
+        if block in ('pre', 'ol', 'ul'):
+            while self.__block.peek() in ('p', 'blockquote'):
                 line += self.__end()
-        elif not block in ('li', 'blockquote'):
+            if self.__line_cont:
+                line += '\n'
+        elif block == 'blockquote':
+            while not self.__block.peek() in (None, 'blockquote'):
+                line += self.__end()
+            if self.__line_cont:
+                line += '\n'
+        elif not block in ('li'):
             while self.__block:
                 line += self.__end()
         
@@ -196,19 +210,19 @@ class KoMarParser(object):
         elif block == 'blockquote':
             self.__quote_level.push(indent)
         
+        self.__line_cont = False
         return line + '<%s>' % self.__block.push(block)
     
     
     def __end(self):
-        line = ''
-        while self.__inline:
-            line += '</%s>' % self.__inline.pop()
+        line = self.__close_inline()
         
         if self.__block.peek() in ('ol', 'ul'):
             self.__list_level.pop()
         elif self.__block.peek() == 'blockquote':
             self.__quote_level.pop()
         
+        self.__line_cont = False
         return line + '</%s>\n' % self.__block.pop()
     
     
@@ -221,7 +235,7 @@ class KoMarParser(object):
         match = BLOCK_RE.match(line)
         name = match.lastgroup
         
-        if name == 'pre': 
+        if name == 'pre':
             return self.__start(name) + '\n'
            
         elif name == 'header': 
@@ -261,15 +275,17 @@ class KoMarParser(object):
             
         elif name == 'blockquote':
             line = ''
-            text = match.group('quote_text')
+            text = match.group('quote_text').strip()
             indent = match.group('quote_indent').count('>')
             while self.__quote_level.peek() > indent:
                 line += self.__end()
             
             while indent > self.__quote_level.peek():
-                if self.__quote_level.peek():
-                    line += '\n'
-                line += self.__start(name, (self.__quote_level.peek() or 0) + 1)
+                level = (self.__quote_level.peek() or 0) + 1
+                line += self.__start(name, level)
+            
+            if self.__line_cont:
+                line += '\n'    
             
             return line + \
                    self.__parse_inline(text)
@@ -280,8 +296,8 @@ class KoMarParser(object):
             
             if not self.__block:
                 line += self.__start('p')
-            elif not self.br_end:
-                line += ' '
+            elif self.__line_cont:
+                line += '\n'            
             
             return line + \
                    self.__parse_inline(text)
