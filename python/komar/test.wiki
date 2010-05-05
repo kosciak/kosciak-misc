@@ -1,0 +1,148 @@
+= KoMar - wiki-markup =
+
+ == Philosophy ===
+KoMar wiki-markup is meant to be: 
+* easy to use
+* easy to read
+* consistent
+* have enough features for everyday use
+
+It's heavily based on
+[[ http://wikicreole.org/wiki/Creole1.0 | Creole 1.0 ]] wiki-markup,
+but there are some differences.
+
+
+ == Syntax =
+ 
+  === Text formatting
+You can use: **bold text**, //italics text//, ~~strikethrough~~, 
+^^superscript^^, ,,subscript,, and ``code snippets``. Inline elements
+can be **combined //with each ~~other~~//**. Formatting **extends
+between line breaks**. But unclosed formatting //does **not** leak...
+
+...between block elements (paragraphs, list items, block quotes, etc).
+
+Changing font colour and size is not supported yet.
+
+
+  === Links
+You can use links like this [[http://google.com/]] or with description
+[[ http://google.com | Google ]] (use **|** between url and description,
+you can even use formatting inside description like this: 
+[[http://google.pl | G**o**,,g,,//l//^^e^^]]
+
+Free links like http://google.com are not recognized, 
+you must use \[[ and \]]! 
+So far multiline link descriptions are not supported.
+Creating anchors is on the TODO list.
+
+
+  === Images
+To insert image use {{http://www.google.pl/intl/en_com/images/logo_plain.png}}
+You can also add ALT text for images: {{ /invalid.jpg | INVALID url! }}  
+  
+  
+  === Block elements
+
+   ==== Headers
+Just start the line with = for <h1>, == for <h2> and so on, up to <h6>.
+Closing ='s are not displayed and can be ommited.
+   
+   
+   ==== Paragraph
+Paragraphs are created automatically. You can use multiple
+lines
+when
+writing
+a paragraph. 
+If you want to create new parapgraph just put...
+      
+...blank line after the previous one. Using \\ you can create linebreak.
+It doesn't matter if linebreak is on the end of line\\
+or in \\ the middle of the line.
+   
+   
+   ==== List
+* You can use unordered lists
+    * to nest the list just indent asterisk
+    * if you want you can use
+      multiline list items or use \\ linebreak
+        # you can mix unordered and ordered lists
+        # you can even add preformated text inside list item like
+{{{
+this 
+
+**not bold!***
+}}}
+and continue the list item here
+        * or mix both list types on the same indent level
+    * you can use **formatting** like in ^^normal^^ text
+# and unclosed //formatting
+# won't leak to the next list item
+# you **can't** nest blockquote inside list item.
+   
+   
+   ==== Blockquote
+> Just start the line with > to create the blockquote, just like quotes 
+> in the e-mail client. \\
+> You don't have to put > at the beginning of the line if you want to
+write multiline blockquote. Put a blank line to end it.
+
+> You can also 
+>> nest blockquote 
+(even multiline) inside
+> another blockquote element.
+
+At this point you can't nest lists or preformatted code inside 
+blockquote.
+   
+   
+   ==== Preformatted text
+If you start the line with:
+{{{
+Text will be put inside <pre> tag
+    This means that all the linebreaks and whitespaces are preserved.
+   Also no **formatting** //will// ^^be^^ ,,used,, (or \**escaping)
+ * lists
+ * and
+> blockquotes
+Will not be created
+
+If you want to end preformatted text use:
+}}}
+Further text will be treated as paragraph.
+   
+   ==== Horizontal line
+Horizontal line can be created by using four or more hyphens in a line
+ ----- 
+Horizontal lines, like blank lines and headers will close all previous
+block elements.
+  
+  
+  === Escape character and inline nowiki
+To escape formatting, linebreak use \** \// \,, \^^ \~~ \\\
+\[[http://google.com]]
+
+You can use {{{inline **nowiki**}}}, {{{{{{ **test** }}}}}} if you don't 
+want wiki markup to be parsed
+
+\----
+
+\= It's not a header! =
+
+ === HTML
+It is not possible to use HTML inside KoMar wiki-markup. 
+
+>, < and & are changed to &gt;, &lt; and &amp;
+
+== TODO:
+
+There are still some features to be implemented:
+ * font colour and size
+ * tables
+ * video embedding 
+ * anchors <a name="foo" /> [[:foo]] [[:foo|bar]]
+ * block elements inside blockquote
+ * defining language in <pre> {{{:css
+ * #title - title, #more, #! - comment
+

@@ -20,11 +20,6 @@
 __author__ = "Wojciech 'KosciaK' Pietrzok (kosciak@kosciak.net)"
 __version__ = "0.3"
 
-# TODO:
-#  - font color and size
-#  - video embedding 
-#  - comments 
-#  - tables
 
 
 import sys
@@ -101,7 +96,7 @@ inline_elements = {
 
 INLINE_RE = re.compile(
     r'(?<!\\)(?P<nowiki>\{{3}(?P<nowiki_contents>.+?\}*)\}{3})|' + \
-    r'(?P<escaped>\\[*/~`^,{[-]{2}|' +\
+    r'(?P<escaped>\\[*/~`^,{[\]\}-]{2}|' +\
                 r'^\s*\\[*#=-]\s|' +\
                 r'\\&gt;\s|' +\
                 r'\\{3,})|' + \
@@ -230,7 +225,7 @@ class KoMarParser(object):
         if self.__block.peek() == 'pre':
             if END_PRE_RE.match(line):
                 return self.__end()
-            return line
+            return self.__escape_html(line)
     
         match = BLOCK_RE.match(line)
         name = match.lastgroup
@@ -254,7 +249,7 @@ class KoMarParser(object):
             
         elif name in ('ol', 'ul'):
             item = match.group('ol_item') or match.group('ul_item')
-            indent = len(match.group('ol_indent') or match.group('ul_indent'))
+            indent = len(match.group('ol_indent') or match.group('ul_indent') or '')
             line = ''
             
             while self.__list_level.peek() > indent:
@@ -285,7 +280,7 @@ class KoMarParser(object):
                 line += self.__start(name, level)
             
             if self.__line_cont:
-                line += '\n'    
+                line += ' '    
             
             return line + \
                    self.__parse_inline(text)
@@ -297,7 +292,7 @@ class KoMarParser(object):
             if not self.__block:
                 line += self.__start('p')
             elif self.__line_cont:
-                line += '\n'            
+                line += ' '            
             
             return line + \
                    self.__parse_inline(text)
