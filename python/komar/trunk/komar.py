@@ -70,12 +70,15 @@ block_elements = {
     'pre':      r'\{{3,}\s*',
     'ul':       r'(?P<ul_indent>\s*)\*\s(?P<ul_item>.*)',
     'ol':       r'(?P<ol_indent>\s*)#\s(?P<ol_item>.*)',
-    'blockquote': r'(?P<quote_indent>(?:\s*\>)+)\s(?P<quote_text>.*)',
+    #'blockquote': r'(?P<quote_indent>(?:\s*\>)+)\s(?P<quote_text>.*)',
     }
 
 BLOCK_RE = re.compile(
-    r'|'.join([r'^(?<!\\)(?P<%s>%s)$' % (name, char) for name, char in block_elements.iteritems()]) + \
-    r'|.*')
+    r'^(?P<blockquote>(?P<quote_indent>(?:\s*\>)+)\s)?' + \
+    r'(?:' + \
+        r'|'.join([r'(?P<%s>%s)$' % (name, char) for name, char in block_elements.iteritems()]) + \
+        r'|(?P<line>.*)' + \
+    r')')
 
 END_PRE_RE = re.compile(r'^\}{3,}\s*$')
 
@@ -96,10 +99,11 @@ inline_elements = {
 
 INLINE_RE = re.compile(
     r'(?<!\\)(?P<nowiki>\{{3}(?P<nowiki_contents>.+?\}*)\}{3})|' + \
-    r'(?P<escaped>\\[*/~`^,{[\]\}-]{2}|' +\
-                r'^\s*\\[*#=-]\s|' +\
-                r'\\&gt;\s|' +\
-                r'\\{3,})|' + \
+    r'(?P<escaped>\\[*/~`^,{[\]\}-]{2}|' + \
+                r'^\s*\\[*#=-]\s|' + \
+                r'\\&gt;\s|' + \
+                r'\\{3,}' + \
+    r')|' + \
     r'(?P<br>\\{2})\s*|' + \
     r'|'.join([r'(?P<%s>%s{2})' % (name, char) for name, char in inline_elements.iteritems()])
     )
@@ -120,7 +124,7 @@ class KoMarParser(object):
             line = self.__parse_block(line)
             if line: 
                 output.write(line)
-        output.write(self.__start())
+        output.write(self.__parse_block(''))
     
     
     def __escape_html(self, line):
@@ -186,18 +190,16 @@ class KoMarParser(object):
             line += self.__parse_inline()
         
         if block in ('pre', 'ol', 'ul'):
-            while self.__block.peek() in ('p', 'blockquote'):
-                line += self.__end()
-            if line and not line.endswith('>\n'):
-                line += '\n'
-        elif block == 'blockquote':
-            while not self.__block.peek() in (None, 'blockquote'):
+            #while self.__block.peek() in ('p', 'blockquote'):
+            while self.__block.peek() == 'p':
                 line += self.__end()
             if line and not line.endswith('>\n'):
                 line += '\n'
         elif not block in ('li'):
-            while self.__block:
+            while not self.__block.peek() in (None, 'blockquote'):
                 line += self.__end()
+            if line and not line.endswith('>\n'):
+                line += '\n'
         
         if block == 'blank':
             return line
@@ -234,29 +236,39 @@ class KoMarParser(object):
     
         match = BLOCK_RE.match(line)
         name = match.lastgroup
+        line = ''
+        
+        if match.group('blockquote'):
+            indent = match.group('quote_indent').count('>')
+            while self.__quote_level.peek() > indent:
+                line += self.__end()
+            
+            while indent > self.__quote_level.peek():
+                level = (self.__quote_level.peek() or 0) + 1
+                line += self.__start('blockquote', level)
+        elif not name == 'line':
+            while self.__quote_level.peek():
+                line += self.__end()
         
         if name == 'pre':
-            return self.__start(name) + '\n'
+            line += self.__start(name) + '\n'
            
         elif name == 'header': 
             text = match.group('header_text')
             level = min(len(match.group('header_level')), 6)
             
-            line = self.__start('h%d' % level)
+            line += self.__start('h%d' % level)
             self.__text = text
-            return line + self.__end()
+            line += self.__end()
             
-        elif name == 'hr':
-            return self.__start(name)
-            
-        elif name == 'blank':
-            return self.__start()
+        elif name in ('hr', 'blank'):
+            line += self.__start(name)
             
         elif name in ('ol', 'ul'):
             item = match.group('ol_item') or match.group('ul_item')
             item = match.group('ol_item') or match.group('ul_item')
             indent = len(match.group('ol_indent') or match.group('ul_indent') or '')
-            line = ''
+            #line = ''
             
             while self.__list_level.peek() > indent:
                 line += self.__end()
@@ -271,37 +283,19 @@ class KoMarParser(object):
                     line += self.__start(name, indent) + '\n'
             
             self.__text = item
-            return line + \
-                   self.__start('li')
+            line += self.__start('li')
             
-        elif name == 'blockquote':
-            line = ''
-            text = match.group('quote_text').strip()
-            indent = match.group('quote_indent').count('>')
-            while self.__quote_level.peek() > indent:
-                line += self.__end()
-            
-            while indent > self.__quote_level.peek():
-                level = (self.__quote_level.peek() or 0) + 1
-                line += self.__start(name, level)
-            
-            if self.__text:
-                self.__text += ' '
-            self.__text += text
-            
-            return line
-        
         else:
-            text = line.strip()
-            line = ''
+            text = match.group('line').strip()
             
-            if not self.__block:
+            if not self.__block or \
+               (self.__block.peek() == 'blockquote' and not self.__text):
                 line += self.__start('p')
             elif self.__text:
                 self.__text += ' '
             self.__text += text
-            
-            return line
+        
+        return line
 
 
 if __name__=="__main__":

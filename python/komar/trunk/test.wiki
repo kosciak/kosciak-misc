@@ -88,8 +88,9 @@ and continue the list item here
    
    
    ==== Blockquote
-> Just start the line with > to create the blockquote, just like quotes 
-> in the e-mail client. \\
+> Just start the line with > to create the **blockquote**, ot workd just 
+> like quotes in the //e-mail// client. 
+> 
 > You don't have to put > at the beginning of the line if you want to
 write multiline blockquote. Put a blank line to end it.
 
@@ -97,10 +98,19 @@ write multiline blockquote. Put a blank line to end it.
 >> nest blockquote 
 (even multiline) inside
 > another blockquote element.
-
-At this point you can't nest lists or preformatted code inside 
-blockquote.
-   
+> * lists
+>   # works
+>   # well
+> * in blockquotes
+> 
+> {{{
+ as well as
+ |    |
+ +----+
+ |    |
+ preformatted text
+}}}
+and here the last paragraph of this blockquote.
    
    ==== Preformatted text
 If you start the line with:
@@ -148,7 +158,5 @@ There are still some features to be implemented:
  * tables
  * video embedding 
  * anchors <a name="foo" /> [[:foo]] [[:foo|bar]]
- * block elements inside blockquote
  * defining language in <pre> {{{:css
  * #title - title, #more, #! - comment
-
