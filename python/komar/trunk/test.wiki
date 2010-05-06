@@ -29,17 +29,22 @@ Changing font colour and size is not supported yet.
 You can use links like this [[http://google.com/]] or with description
 [[ http://google.com | Google ]] (use **|** between url and description,
 you can even use formatting inside description like this: 
-[[http://google.pl | G**o**,,g,,//l//^^e^^]]
+[[http://google.com | G**o**,,g,,//l//^^e^^]]. \\
+Multiline descriptions are also supported: [[http://google.com |
+This is a link to google with
+very long description! ]]
 
 Free links like http://google.com are not recognized, 
 you must use \[[ and \]]! 
-So far multiline link descriptions are not supported.
 Creating anchors is on the TODO list.
 
 
   === Images
 To insert image use {{http://www.google.pl/intl/en_com/images/logo_plain.png}}
 You can also add ALT text for images: {{ /invalid.jpg | INVALID url! }}  
+
+It is possible to use image as link description\\ [[ http://google.com |
+{{http://www.google.pl/intl/en_com/images/logo_plain.png | Google}}]]
   
   
   === Block elements
@@ -124,7 +129,8 @@ To escape formatting, linebreak use \** \// \,, \^^ \~~ \\\
 \[[http://google.com]]
 
 You can use {{{inline **nowiki**}}}, {{{{{{ **test** }}}}}} if you don't 
-want wiki markup to be parsed
+want wiki markup to be parsed. It {{{**can** //be// used across many
+lines ^^just^^ ,,like,, here}}}.
 
 \----
 
