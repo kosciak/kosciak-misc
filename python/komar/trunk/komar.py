@@ -18,7 +18,7 @@
 
 
 __author__ = "Wojciech 'KosciaK' Pietrzok (kosciak@kosciak.net)"
-__version__ = "0.4"
+__version__ = "0.5"
 
 
 
@@ -68,9 +68,9 @@ block_elements = {
     'blank':    r'\s*',
     'hr':       r'\s*-{4,}\s*',
     'pre':      r'\{{3,}\s*',
+    'p':        r'\s*\|?(?P<p_align>[<>]{2})\|\s*(?P<p_text>.*)',
     'ul':       r'(?P<ul_indent>\s*)\*\s(?P<ul_item>.*)',
     'ol':       r'(?P<ol_indent>\s*)#\s(?P<ol_item>.*)',
-    #'blockquote': r'(?P<quote_indent>(?:\s*\>)+)\s(?P<quote_text>.*)',
     }
 
 BLOCK_RE = re.compile(
@@ -82,19 +82,30 @@ BLOCK_RE = re.compile(
 
 END_PRE_RE = re.compile(r'^\}{3,}\s*$')
 
+ALIGN = {
+    '>>': 'text-align: right;',
+    '<<': 'text-align: left;',
+    '><': 'text-align: center;',
+    '<>': 'text-align: justify;',
+    }
 
 #
 #   inline elements
 #
 inline_elements = {
-    'strong':   r'\*',
-    'em':       r'(?<!:)/',
-    'del':      r'~',
-    'code':     r'`',
-    'sup':      r'\^',
-    'sub':      r',',
-    'img':      r'\{{2}(?P<img_src>.+?)(?:\s*\|\s*(?P<img_alt>.+?)\s*)?\}',
-    'a':        r'\[{2}(?P<a_href>.+?)(?:\s*\|\s*(?P<a_description>.+?)\s*)?\]',
+    'strong':   r'\*{2}',
+    'em':       r'(?<!:)/{2}',
+    'del':      r'~{2}',
+    'code':     r'`{2}',
+    'sup':      r'\^{2}',
+    'sub':      r',{2}',
+    'img':      r'\{{2}(?P<img_src>.+?)(?:\s*\|\s*(?P<img_alt>.+?)\s*)?\}{2}',
+    'a':        r'\[{2}(?P<a_href>.+?)(?:\s*\|\s*(?P<a_description>.+?)\s*)?\]{2}',
+    'span':     r'\({2}(?:\s*(?P<font_size>[+]{1,3}|[-]{1,3})[+-]*)?' + \
+                     r'(?:\s*(?P<color_foreground>#?[0-9a-zA-Z]+))?' + \
+                     r'(?:\s*/\s*(?P<color_background>#?[0-9a-zA-Z]+))?' + \
+                     r'(?:\s*\|\s*(?P<span_text>.+?))' + \
+                r'\s*\){2}',
     }
 
 INLINE_RE = re.compile(
@@ -105,8 +116,17 @@ INLINE_RE = re.compile(
                 r'\\{3,}' + \
     r')|' + \
     r'(?P<br>\\{2})\s*|' + \
-    r'|'.join([r'(?P<%s>%s{2})' % (name, char) for name, char in inline_elements.iteritems()])
+    r'|'.join([r'(?P<%s>%s)' % (name, char) for name, char in inline_elements.iteritems()])
     )
+
+SIZE = {
+    '---': 'xx-small',
+    '--': 'x-small',
+    '-': 'small',
+    '+': 'large',
+    '++': 'x-large',
+    '+++': 'xx-large',
+    }
 
 
 class KoMarParser(object):
@@ -130,7 +150,8 @@ class KoMarParser(object):
     def __escape_html(self, line):
         return line.replace('&', '&amp;') \
                    .replace('<', '&lt;') \
-                   .replace('>', '&gt;')
+                   .replace('>', '&gt;') \
+                   .replace('\&amp;', '&')
     
 
     def __replace_inline(self, match):
@@ -155,12 +176,29 @@ class KoMarParser(object):
             href = match.group('a_href').strip()
             description = match.group('a_description')
             if description:
-                description = INLINE_RE.sub(self.__replace_inline, description)
                 description = self.__parse_inline(description, False)
-                #TODO: use __parse_inline (with closing)!
             else:
                 description = href
+            
             return '<a href="%s">%s</a>' % (href, description)
+        
+        if name == 'span':
+            text = self.__parse_inline(match.group('span_text'), False)
+            style = ''
+            
+            size = match.group('font_size')
+            if size:
+                style += 'font-size: %s;' % SIZE[size]
+            
+            color = match.group('color_foreground')
+            if color:
+                style += 'color: %s;' % color
+            
+            background = match.group('color_background')
+            if background:
+                style += 'background-color: %s;' % background
+            
+            return '<span style="%s">%s</span>' % (style, text)
         
         if self.__inline.peek() == name:
             return '</%s>' % self.__inline.pop()
@@ -186,11 +224,15 @@ class KoMarParser(object):
     
     def __start(self, block='blank', indent=None):
         line = ''
+        style = None
+        if isinstance(block, (set, tuple, list)):
+            style = block[1]
+            block = block[0]
+        
         if self.__block.peek() in ('li', 'blockquote'):
             line += self.__parse_inline()
         
         if block in ('pre', 'ol', 'ul'):
-            #while self.__block.peek() in ('p', 'blockquote'):
             while self.__block.peek() == 'p':
                 line += self.__end()
             if line and not line.endswith('>\n'):
@@ -211,7 +253,10 @@ class KoMarParser(object):
         elif block == 'blockquote':
             self.__quote_level.push(indent)
         
-        return line + '<%s>' % self.__block.push(block)
+        if style:
+            style = ' style="%s"' % style
+        
+        return line + '<%s%s>' % (self.__block.push(block), style or '')
     
     
     def __end(self):
@@ -268,7 +313,6 @@ class KoMarParser(object):
             item = match.group('ol_item') or match.group('ul_item')
             item = match.group('ol_item') or match.group('ul_item')
             indent = len(match.group('ol_indent') or match.group('ul_indent') or '')
-            #line = ''
             
             while self.__list_level.peek() > indent:
                 line += self.__end()
@@ -282,8 +326,15 @@ class KoMarParser(object):
                     line += self.__end()
                     line += self.__start(name, indent) + '\n'
             
-            self.__text = item
             line += self.__start('li')
+            self.__text = item
+            
+        elif name == 'p':
+            style = ALIGN[match.group('p_align')]
+            text = match.group('p_text').strip()
+            
+            line += self.__start((name, style))
+            self.__text += text
             
         else:
             text = match.group('line').strip()

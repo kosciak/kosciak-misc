@@ -22,7 +22,11 @@ between line breaks**. But unclosed formatting //does **not** leak...
 
 ...between block elements (paragraphs, list items, block quotes, etc).
 
-Changing font colour and size is not supported yet.
+((---|extremely small)), ((--|very small)), ((-|small)), ((+|large)), 
+((++|very large)), ((+++|extremely large)) is also possible. 
+You can even change ((red|foreground)), (( /yellow|background))
+or even ((+++ #991a22/#AAA|colors and size!)). 
+
 
 
   === Links
@@ -65,7 +69,28 @@ If you want to create new parapgraph just put...
 ...blank line after the previous one. Using \\ you can create linebreak.
 It doesn't matter if linebreak is on the end of line\\
 or in \\ the middle of the line.
-   
+
+>>| This is right aligned paragraph: 
+"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod 
+tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, 
+quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+
+|<<| This is left aligned paragraph: 
+"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod 
+tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, 
+quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+
+><|This is centered paragraph: 
+"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod 
+tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, 
+quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+
+|<>|This is justified paragraph: 
+"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod 
+tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, 
+quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+
+
    
    ==== List
 * You can use unordered lists
@@ -152,11 +177,9 @@ It is not possible to use HTML inside KoMar wiki-markup.
 >, < and & are changed to &gt;, &lt; and &amp;
 
 == TODO:
-
 There are still some features to be implemented:
- * font colour and size
  * tables
  * video embedding 
  * anchors <a name="foo" /> [[:foo]] [[:foo|bar]]
  * defining language in <pre> {{{:css
- * #title - title, #more, #! - comment
+ * #title - title, #more, #! - comment &arr; \&arr;
