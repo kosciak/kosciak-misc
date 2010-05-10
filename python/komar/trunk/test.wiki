@@ -23,8 +23,8 @@ between line breaks**. But unclosed formatting //does **not** leak...
 ...between block elements (paragraphs, list items, block quotes, etc).
 
 ((---|extremely small)), ((--|very small)), ((-|small)), ((+|large)), 
-((++|very large)), ((+++|extremely large)) is also possible. 
-You can even change ((red|foreground)), (( /yellow|background))
+((++|very large)), ((+++|extremely large)) text is also possible. 
+You can even change ((red|foreground)), ((/yellow|background))
 or even ((+++ #991a22/#AAA|colors and size!)). 
 
 
@@ -55,7 +55,7 @@ It is possible to use image as link description\\ [[ http://google.com |
 
    ==== Headers
 Just start the line with = for <h1>, == for <h2> and so on, up to <h6>.
-Closing ='s are not displayed and can be ommited.
+Closing ='s are not displayed and can be omited.
    
    
    ==== Paragraph
@@ -64,41 +64,40 @@ lines
 when
 writing
 a paragraph. 
-If you want to create new parapgraph just put...
+If you want to create new paragraph just put...
       
 ...blank line after the previous one. Using \\ you can create linebreak.
 It doesn't matter if linebreak is on the end of line\\
 or in \\ the middle of the line.
 
->>| This is right aligned paragraph: 
-"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod 
-tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, 
-quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+>>| This is right aligned paragraph: "Lorem ipsum dolor sit amet, 
+consectetur adipisicing elit, sed do eiusmod tempor incididunt ut 
+labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud 
+exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
 
-|<<| This is left aligned paragraph: 
-"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod 
-tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, 
-quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+|<<| This is left aligned paragraph: "Lorem ipsum dolor sit amet, 
+consectetur adipisicing elit, sed do eiusmod tempor incididunt ut 
+labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud 
+exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
 
-><|This is centered paragraph: 
-"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod 
-tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, 
-quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+><|This is centered paragraph: "Lorem ipsum dolor sit amet, 
+consectetur adipisicing elit, sed do eiusmod tempor incididunt ut 
+labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud 
+exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
 
-|<>|This is justified paragraph: 
-"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod 
-tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, 
-quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+|<>|This is justified paragraph: "Lorem ipsum dolor sit amet, 
+consectetur adipisicing elit, sed do eiusmod tempor incididunt ut 
+labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud 
+exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
 
 
-   
    ==== List
 * You can use unordered lists
     * to nest the list just indent asterisk
     * if you want you can use
       multiline list items or use \\ linebreak
         # you can mix unordered and ordered lists
-        # you can even add preformated text inside list item like
+        # you can even add preformatted text inside list item like
 {{{
 this 
 

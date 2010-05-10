@@ -111,7 +111,7 @@ inline_elements = {
 INLINE_RE = re.compile(
     r'(?<!\\)(?P<nowiki>\{{3}(?P<nowiki_contents>.+?\}*)\}{3})|' + \
     r'(?P<escaped>\\[*/~`^,{[\]\}-]{2}|' + \
-                r'^\s*\\[*#=-]\s|' + \
+                r'\\[*#=-]\s|' + \
                 r'\\&gt;\s|' + \
                 r'\\{3,}' + \
     r')|' + \
@@ -277,7 +277,7 @@ class KoMarParser(object):
         if self.__block.peek() == 'pre':
             if END_PRE_RE.match(line):
                 return self.__end()
-            return self.__escape_html(line)
+            return self.__escape_html(line) + '\n'
     
         match = BLOCK_RE.match(line)
         name = match.lastgroup
