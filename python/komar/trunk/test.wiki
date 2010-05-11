@@ -170,10 +170,16 @@ lines ^^just^^ ,,like,, here}}}.
 
 \= It's not a header! =
 
+
  === HTML
 It is not possible to use HTML inside KoMar wiki-markup. 
 
 >, < and & are changed to &gt;, &lt; and &amp;
+
+
+== Known bugs:
+ * problems with inline no wiki containing \]], \)) inside links and images
+
 
 == TODO:
 There are still some features to be implemented:
