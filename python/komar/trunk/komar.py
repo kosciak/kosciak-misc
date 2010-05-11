@@ -96,12 +96,12 @@ inline_elements = {
     'code':     r'`{2}',
     'sup':      r'\^{2}',
     'sub':      r',{2}',
-    'img':      r'\{{2}(?P<img_src>.+?)(?:\s*\|\s*(?P<img_alt>.+?\s*\}*)\s*)?(?<!\\)\}{2}',
-    'a':        r'\[{2}(?P<a_href>.+?)(?:\s*\|\s*(?P<a_description>.+?\s*\]*)\s*)?(?<!\\)\]{2}',
+    'img':      r'\{{2}(?P<img_src>.+?)(?:\s*\|\s*(?P<img_alt>.+?\}*)\s*)?(?<!\\)\}{2}',
+    'a':        r'\[{2}(?P<a_href>.+?)(?:\s*\|\s*(?P<a_description>.+?\]*)\s*)?(?<!\\)\]{2}',
     'span':     r'\({2}(?:\s*(?P<font_size>[+]{1,3}|[-]{1,3})[+-]*)?' + \
                      r'(?:\s*(?P<color_foreground>#?[0-9a-zA-Z]+))?' + \
                      r'(?:\s*/\s*(?P<color_background>#?[0-9a-zA-Z]+))?' + \
-                     r'(?:\s*\|\s*(?P<span_text>.+?\s*\)*))' + \
+                     r'(?:\s*\|\s*(?P<span_text>.+?\)*))' + \
                 r'\s*(?<!\\)\){2}',
     }
 
