@@ -70,22 +70,22 @@ If you want to create new paragraph just put...
 It doesn't matter if linebreak is on the end of line\\
 or in \\ the middle of the line.
 
->>| This is right aligned paragraph: "Lorem ipsum dolor sit amet, 
+\>>] This is right aligned paragraph: "Lorem ipsum dolor sit amet, 
 consectetur adipisicing elit, sed do eiusmod tempor incididunt ut 
 labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud 
 exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
 
-|<<| This is left aligned paragraph: "Lorem ipsum dolor sit amet, 
+\[<<] This is left aligned paragraph: "Lorem ipsum dolor sit amet, 
 consectetur adipisicing elit, sed do eiusmod tempor incididunt ut 
 labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud 
 exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
 
-><|This is centered paragraph: "Lorem ipsum dolor sit amet, 
+><]This is centered paragraph: "Lorem ipsum dolor sit amet, 
 consectetur adipisicing elit, sed do eiusmod tempor incididunt ut 
 labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud 
 exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
 
-|<>|This is justified paragraph: "Lorem ipsum dolor sit amet, 
+[<>]This is justified paragraph: "Lorem ipsum dolor sit amet, 
 consectetur adipisicing elit, sed do eiusmod tempor incididunt ut 
 labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud 
 exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.

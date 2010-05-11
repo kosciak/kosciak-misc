@@ -16,15 +16,12 @@
 #
 
 
-
 __author__ = "Wojciech 'KosciaK' Pietrzok (kosciak@kosciak.net)"
 __version__ = "0.5"
 
 
-
 import sys
 import os
-
 import re
 
 
@@ -68,7 +65,7 @@ block_elements = {
     'blank':    r'\s*',
     'hr':       r'\s*-{4,}\s*',
     'pre':      r'\{{3,}\s*',
-    'p':        r'\s*\|?(?P<p_align>[<>]{2})\|\s*(?P<p_text>.*)',
+    'p':        r'\s*\[?(?P<p_align>[<>]{2})\]\s*(?P<p_text>.*)',
     'ul':       r'(?P<ul_indent>\s*)\*\s(?P<ul_item>.*)',
     'ol':       r'(?P<ol_indent>\s*)#\s(?P<ol_item>.*)',
     }
@@ -112,6 +109,7 @@ INLINE_RE = re.compile(
     r'(?<!\\)(?P<nowiki>\{{3}(?P<nowiki_contents>.+?\}*)\}{3})|' + \
     r'(?P<escaped>\\[*/~`^,{[\]\}-]{2}|' + \
                 r'\\[*#=-]\s|' + \
+                r'\\\[?(&gt;|&lt;){2}\]|' + \
                 r'\\&gt;\s|' + \
                 r'\\{3,}' + \
     r')|' + \
@@ -277,8 +275,8 @@ class KoMarParser(object):
         if self.__block.peek() == 'pre':
             if END_PRE_RE.match(line):
                 return self.__end()
-            return self.__escape_html(line) + '\n'
-    
+            return self.__escape_html(line.rstrip('\n')) + '\n'
+        
         match = BLOCK_RE.match(line)
         name = match.lastgroup
         line = ''
@@ -310,7 +308,6 @@ class KoMarParser(object):
             line += self.__start(name)
             
         elif name in ('ol', 'ul'):
-            item = match.group('ol_item') or match.group('ul_item')
             item = match.group('ol_item') or match.group('ul_item')
             indent = len(match.group('ol_indent') or match.group('ul_indent') or '')
             
@@ -345,7 +342,7 @@ class KoMarParser(object):
             elif self.__text:
                 self.__text += ' '
             self.__text += text
-        
+            
         return line
 
 
