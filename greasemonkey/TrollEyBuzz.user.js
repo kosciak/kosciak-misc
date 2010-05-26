@@ -233,8 +233,6 @@ var detrollify = function() {
     }
     appendCommentersListButton();  
     appendTrollsListButton();  
-        
-    setTimeout(detrollify, 500)
 }
 
 
@@ -272,8 +270,7 @@ var init = function() {
         return;
     }
     
-    appendTrollsListButton();
-    
+    setInterval(detrollify, 500);
     detrollify();
 }
 
