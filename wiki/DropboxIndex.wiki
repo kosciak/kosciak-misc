@@ -78,6 +78,9 @@ I have used icons from [http://www.famfamfam.com/lab/icons/silk/ famfamfam's "Si
 
 = Changelog =
 
+0.4.1
+  * minor bugfix - fixed invalid script's homepage url
+
 0.4
   * added template system
 
