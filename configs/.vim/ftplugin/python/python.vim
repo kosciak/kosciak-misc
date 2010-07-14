@@ -8,3 +8,5 @@ set smarttab
 set autoindent
 set nosmartindent
 
+set omnifunc=pythoncomplete#Complete
+

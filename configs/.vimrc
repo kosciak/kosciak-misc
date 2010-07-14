@@ -102,8 +102,6 @@ if has("autocmd")
   autocmd FileType vim setlocal noexpandtab
   autocmd FileType svn setlocal noexpandtab
 
-  autocmd FileType python set omnifunc=pythoncomplete#Complete
-
   " When editing a file, always jump to the last known cursor position.
   " Don't do it when the position is invalid or when inside an event handler
   " (happens when dropping a file on gvim).
@@ -171,3 +169,10 @@ let Tlist_Auto_Highlight_Tag = 1
 let Tlist_Close_On_Select = 1
 let Tlist_File_Fold_Auto_Close = 1
 
+" MiniBufferExplorer
+let g:miniBufExplMapWindowNavVim = 1
+let g:miniBufExplMapWindowNavArrows = 1
+let g:miniBufExplMapCTabSwitchBufs = 1
+let g:miniBufExplModSelTarget = 1 
+let g:miniBufExplUseSingleClick = 1
+let g:miniBufExplForceSyntaxEnable = 1
