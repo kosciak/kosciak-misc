@@ -60,13 +60,6 @@ set spellsuggest=best,10
 
 
 " ----------------------------------------------------------------------
-"  GUI options
-" ----------------------------------------------------------------------
-
-set guifont=Monospace\ 9
-
-
-" ----------------------------------------------------------------------
 "  Text, tab, indentation
 " ----------------------------------------------------------------------
 
@@ -81,6 +74,7 @@ set listchars=tab:→\ ,eol:¶,extends:>,precedes:<,trail:·,nbsp:°
 
 set autoindent
 set smartindent
+
 
 " ----------------------------------------------------------------------
 "  Windows, tabs, buffers
@@ -107,6 +101,8 @@ if has("autocmd")
   autocmd FileType text setlocal noexpandtab
   autocmd FileType vim setlocal noexpandtab
   autocmd FileType svn setlocal noexpandtab
+
+  autocmd FileType python set omnifunc=pythoncomplete#Complete
 
   " When editing a file, always jump to the last known cursor position.
   " Don't do it when the position is invalid or when inside an event handler
@@ -147,9 +143,31 @@ command DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis
 
 
 " ----------------------------------------------------------------------
-"  
+"  Colorscheme
 " ----------------------------------------------------------------------
 
+highlight OverLength ctermbg=darkred ctermfg=white guibg=#592929
+match OverLength /\%81v.\+/
+
+
+" ----------------------------------------------------------------------
+"  GUI options
+" ----------------------------------------------------------------------
+
+set guifont=Monospace\ 9
+
+
+" ----------------------------------------------------------------------
+"  Plugins
+" ----------------------------------------------------------------------
+
+" CSApprox
 let g:CSApprox_loaded=1
 
+" TagList
+let Tlist_Exit_OnlyWindow = 1
+let Tlist_GainFocus_On_ToggleOpen = 1
+let Tlist_Auto_Highlight_Tag = 1
+let Tlist_Close_On_Select = 1
+let Tlist_File_Fold_Auto_Close = 1
 
