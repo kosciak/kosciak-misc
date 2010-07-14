@@ -12,7 +12,8 @@ xterm*borderWidth:      0
 
 xterm*cursorBlink:      true
 xterm*cursorOffTime:    800
-xterm*colorBDMode:      true
+xterm*colorMode:        on
+xterm*colorBDMode:      off
 
 !--< colors settings >--!
 xterm*background:       #fbfbfb
