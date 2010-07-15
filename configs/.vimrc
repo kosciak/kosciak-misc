@@ -50,7 +50,7 @@ set showmatch		" show matching brackets
 
 set wrap
 set linebreak
-set cpoptions+=n
+set cpoptions=aABceFsn
 set showbreak=>>>\ 
 set display+=lastline	" display as much of the last line as possible
 
@@ -69,7 +69,7 @@ set shiftround
 set expandtab
 set smarttab
 
-set listchars=tab:→\ ,eol:¶,extends:>,precedes:<,trail:·,nbsp:°
+set listchars=tab:→\ ,eol:¶,extends:→,precedes:<,trail:·,nbsp:°
 "set list
 
 set autoindent
@@ -101,6 +101,14 @@ if has("autocmd")
   autocmd FileType text setlocal noexpandtab
   autocmd FileType vim setlocal noexpandtab
   autocmd FileType svn setlocal noexpandtab
+
+  autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
+  autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
+  autocmd FileType css set omnifunc=csscomplete#CompleteCSS
+  autocmd FileType xml set omnifunc=xmlcomplete#CompleteTags
+  autocmd FileType php set omnifunc=phpcomplete#CompletePHP
+  autocmd FileType c set omnifunc=ccomplete#Complete
+
 
   " When editing a file, always jump to the last known cursor position.
   " Don't do it when the position is invalid or when inside an event handler
@@ -168,6 +176,8 @@ let Tlist_GainFocus_On_ToggleOpen = 1
 let Tlist_Auto_Highlight_Tag = 1
 let Tlist_Close_On_Select = 1
 let Tlist_File_Fold_Auto_Close = 1
+let Tlist_Enable_Fold_Column = 0
+let Tlist_Inc_Winwidth = 0					" Fix for terminal
 
 " MiniBufferExplorer
 let g:miniBufExplMapWindowNavVim = 1
@@ -175,4 +185,5 @@ let g:miniBufExplMapWindowNavArrows = 1
 let g:miniBufExplMapCTabSwitchBufs = 1
 let g:miniBufExplModSelTarget = 1 
 let g:miniBufExplUseSingleClick = 1
-let g:miniBufExplForceSyntaxEnable = 1
+"let g:miniBufExplForceSyntaxEnable = 1		" Messes up TagList colouring
+

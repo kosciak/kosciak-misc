@@ -60,6 +60,10 @@
 let s:cpo_save = &cpo
 set cpo&vim
 
+" UGLY HACK!!!
+set cpo+=n
+" UGLY HACK!!!
+
 if !exists('loaded_taglist')
     " First time loading the taglist plugin
     "
