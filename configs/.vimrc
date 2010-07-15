@@ -180,7 +180,6 @@ let Tlist_Enable_Fold_Column = 0
 let Tlist_Inc_Winwidth = 0					" Fix for terminal
 
 " bufExplorer
-
 let g:bufExplorerDefaultHelp=0
 
 " MiniBufferExplorer
@@ -194,4 +193,10 @@ let g:miniBufExplUseSingleClick = 1
 
 " NERDTree
 let NERDTreeQuitOnOpen=1
+
+" svndiff
+hi DiffAdd      ctermfg=0 ctermbg=2 guibg='green'
+hi DiffDelete   ctermfg=0 ctermbg=1 guibg='red'
+hi DiffChange   ctermfg=0 ctermbg=3 guibg='yellow' 
+let g:svndiff_autoupdate = 1 
 
