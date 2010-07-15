@@ -50,7 +50,7 @@ set showmatch		" show matching brackets
 
 set wrap
 set linebreak
-set cpoptions=aABceFsn
+set cpoptions+=n
 set showbreak=>>>\ 
 set display+=lastline	" display as much of the last line as possible
 
@@ -182,8 +182,12 @@ let Tlist_Inc_Winwidth = 0					" Fix for terminal
 " MiniBufferExplorer
 let g:miniBufExplMapWindowNavVim = 1
 let g:miniBufExplMapWindowNavArrows = 1
-let g:miniBufExplMapCTabSwitchBufs = 1
+let g:miniBufExplMapCTabSwitchBufs = 0
 let g:miniBufExplModSelTarget = 1 
 let g:miniBufExplUseSingleClick = 1
+"let g:miniBufExplorerMoreThanOne = 1
 "let g:miniBufExplForceSyntaxEnable = 1		" Messes up TagList colouring
+
+" NERDTree
+let NERDTreeQuitOnOpen=1
 

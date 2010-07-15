@@ -10,3 +10,6 @@ set nosmartindent
 
 set omnifunc=pythoncomplete#Complete
 
+" Open all folds on start
+autocmd Syntax python normal zR
+
