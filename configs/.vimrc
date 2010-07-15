@@ -179,6 +179,10 @@ let Tlist_File_Fold_Auto_Close = 1
 let Tlist_Enable_Fold_Column = 0
 let Tlist_Inc_Winwidth = 0					" Fix for terminal
 
+" bufExplorer
+
+let g:bufExplorerDefaultHelp=0
+
 " MiniBufferExplorer
 let g:miniBufExplMapWindowNavVim = 1
 let g:miniBufExplMapWindowNavArrows = 1
