@@ -60,10 +60,6 @@
 let s:cpo_save = &cpo
 set cpo&vim
 
-" UGLY HACK!!!
-set cpo+=n
-" UGLY HACK!!!
-
 if !exists('loaded_taglist')
     " First time loading the taglist plugin
     "
@@ -333,6 +329,7 @@ endif
 if !exists('s:tlist_sid')
     " Two or more versions of taglist plugin are installed. Don't
     " load this version of the plugin.
+	let &cpo = s:cpo_save
     finish
 endif
 
