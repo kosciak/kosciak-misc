@@ -54,6 +54,8 @@ set cpoptions+=n
 set showbreak=>>>\ 
 set display+=lastline	" display as much of the last line as possible
 
+set scrolloff=3
+
 " Spellchecking: English and Polish, show 10 best suggestions
 set spelllang=en,pl
 set spellsuggest=best,10
@@ -193,10 +195,17 @@ let g:miniBufExplUseSingleClick = 1
 
 " NERDTree
 let NERDTreeQuitOnOpen=1
+let NERDTreeShowHidden=0
+let NERDTreeShowBookmarks=1
 
 " svndiff
 hi DiffAdd      ctermfg=0 ctermbg=2 guibg='green'
 hi DiffDelete   ctermfg=0 ctermbg=1 guibg='red'
 hi DiffChange   ctermfg=0 ctermbg=3 guibg='yellow' 
-let g:svndiff_autoupdate = 1 
+let g:svndiff_autoupdate=1 
+
+" ctags
+let g:ctags_title=0
+let g:ctags_statusline=1
+let generate_tags=1
 
