@@ -11,8 +11,8 @@ if exists("b:loaded_py_match") || &cp
 endif
 let b:loaded_py_match = 1
 
-let s:save_cpo = &cpo
-set cpo&vim
+"let s:save_cpo = &cpo
+"set cpo&vim
 
 " % for if -> elif -> else -> if, g% for else -> elif -> if -> else
 nnoremap <buffer> <silent> %  :<C-U>call <SID>PyMatch('%','n') <CR>
@@ -282,6 +282,6 @@ fun! s:CleanUp(options, mode, ...)
   return 0
 endfun
 
-let &cpo = s:save_cpo
+"let &cpo = s:save_cpo
 
 " vim:sts=2:sw=2:ff=unix:
