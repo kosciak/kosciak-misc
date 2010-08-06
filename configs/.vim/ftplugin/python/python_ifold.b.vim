@@ -49,6 +49,31 @@ function! PythonFoldText()
         return size . " lines: " . line
 endfunction
 
+function! PythonFoldText()
+    let line = matchstr(getline(v:foldstart), '\S\+.\+')
+    let nnum = nextnonblank(v:foldstart + 0)
+    let nextline = getline(nnum)
+    if nextline =~ '^\s\+"""$'
+        let line = matchstr(getline(nnum + 1), '\S\+.\+')
+    elseif nextline =~ '^\s\+"""'
+        let line = matchstr(nextline, '"""\zs.\{-}\ze\("""\)\?$')
+    elseif nextline =~ '^\s\+"[^"]\+"$'
+        let line = line . ' ' . matchstr(nextline, '"\zs.*\ze"')
+    endif
+    let size = 1 + v:foldend - v:foldstart
+    if size < 10
+        let size = " " . size
+    endif
+    if size < 100
+        let size = " " . size
+    endif
+    if size < 1000
+        let size = " " . size
+    endif
+        return size . " lines: " . line . ' '
+endfunction
+
+
 function! GetPythonFold(lnum)
     let line = getline(a:lnum - 1)
 
