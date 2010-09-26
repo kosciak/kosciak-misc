@@ -20,6 +20,7 @@ else
   set backup		" keep a backup file
 endif
 
+set wildignore+=*.pyc
 
 " ----------------------------------------------------------------------
 "  VIM interface
@@ -138,6 +139,8 @@ map Q gq
 
 " More logical yanking (like D, C)
 map Y y$
+
+nnoremap <leader><space> :noh<cr>
 
 
 " ----------------------------------------------------------------------
