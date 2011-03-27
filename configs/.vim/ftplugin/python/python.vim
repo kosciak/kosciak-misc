@@ -13,3 +13,5 @@ set omnifunc=pythoncomplete#Complete
 " Open all folds on start
 autocmd Syntax python normal zR
 
+highlight OverLength ctermbg=darkred ctermfg=white guibg=#592929
+match OverLength /\%81v.\+/
