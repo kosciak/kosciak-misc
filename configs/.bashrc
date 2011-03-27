@@ -90,7 +90,7 @@ if [ -x /usr/bin/dircolors ]; then
     #alias dir='dir --color=auto'
     #alias vdir='vdir --color=auto'
 
-    alias grep='grep --color=auto'
+    alias grep='grep -n --color=auto'
     #alias fgrep='fgrep --color=auto'
     #alias egrep='egrep --color=auto'
 
@@ -123,3 +123,8 @@ export LESS_TERMCAP_us=$'\E[04;38;5;146m' # begin underline
 
 # load xterm settings
 xrdb -load ~/.Xdefaults
+
+# color nosetests
+#export NOSE_REDNOSE=1
+alias rednose='nosetests --rednose'
+alias autorednose='autonose --console -x --rednose'
