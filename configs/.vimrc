@@ -20,7 +20,7 @@ else
   set backup		" keep a backup file
 endif
 
-set wildignore+=*.pyc
+set wildignore+=*.pyc,*~
 
 " ----------------------------------------------------------------------
 "  VIM interface
@@ -157,8 +157,8 @@ command DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis
 "  Colorscheme
 " ----------------------------------------------------------------------
 
-highlight OverLength ctermbg=darkred ctermfg=white guibg=#592929
-match OverLength /\%81v.\+/
+"highlight OverLength ctermbg=darkred ctermfg=white guibg=#592929
+"match OverLength /\%81v.\+/
 
 
 " ----------------------------------------------------------------------
