@@ -69,5 +69,18 @@ My custom Vimperator scripts
         true
     );
     
+    commands.addUserCommand(
+        ['fire[bug]', 'fb'],
+        'Toggle Firebug toolbar ',
+        function () {
+            if (typeof(Firebug) == 'object') {
+                Firebug.toggleBar();
+            } else {
+                liberator.echoerr('Firebug is not installed or disabled');
+            }
+        },
+        true
+    );
+    
 })();
 
