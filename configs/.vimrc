@@ -83,6 +83,7 @@ set smartindent
 "  Windows, tabs, buffers
 " ----------------------------------------------------------------------
 
+set hidden 			" allow closing of windows with unsaved buffers
 
 
 " ----------------------------------------------------------------------
