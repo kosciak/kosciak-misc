@@ -125,6 +125,9 @@ SIZE = {
     '++': 'x-large',
     '+++': 'xx-large',
     }
+    
+YOUTUBE = {'425': '344', '480': '385', '640': '505', '960': '745',
+           '560': '340', '640': '385', '853': '505', '1280': '745'}
 
 
 class KoMarParser(object):
@@ -346,11 +349,10 @@ class KoMarParser(object):
         return line
 
 
-if __name__=="__main__":
+def run():
     
     HELP = '''KoMar Parser version %s
 Usage: komar.py <input> [<output>]
-       cat <input> | komar.py [<output>]
        cat <input> | komar.py [<output>]
 
 If no output file is specified standard output stream is used.
@@ -376,3 +378,8 @@ If no output file is specified standard output stream is used.
 
     parser = KoMarParser()    
     parser.parse(input, output)
+
+
+if __name__=="__main__":
+    run()
+
