@@ -89,6 +89,9 @@ I have used icons from [http://www.famfamfam.com/lab/icons/silk/ famfamfam's "Si
 
 = Changelog =
 
+0.4.3
+  * just a quick minor bugfix
+
 0.4.2
   * nothing has changed in how the scripts works but...
   * added `easy_install` / `pip` support and uploaded package to PyPI
