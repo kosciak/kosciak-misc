@@ -8,7 +8,7 @@ Creates index.html for directory contents shared publicly on [https://www.dropbo
 
 = Download =
 
-Check the [http://code.google.com/p/kosciak-misc/downloads/list Downloads] section or checkout the source from Subversion repository using
+Check the [http://code.google.com/p/kosciak-misc/downloads/list Downloads]  section, install using `pip` / `easy_install` from [http://pypi.python.org/pypi/dropbox-index PyPI], or checkout the source from Subversion repository using
 {{{
 svn checkout http://kosciak-misc.googlecode.com/svn/python/dropbox-index/trunk/ dropbox-index
 }}}
@@ -20,17 +20,28 @@ Script was tested on Linux but should work on all operating systems with *Python
 
 Generated {{{index.html}}} pages were tested on Linux with Chrome 4.x, Firefox 3.0.x, and Opera 10.x 
 
+
+= Installation =
+
+Download, extract, and run:
+{{{
+python setup.py install
+}}}
+
 = Usage =
 
 Just run this Python script with directory as an argument (and add -R as an option if you want to include subdirectories)
 {{{
-Usage: dropbox-index.py [options] <directory>
+Usage: dropbox-index [options] DIRECTORY
 
 Options:
-  -h, --help            Show help message and exit.
-  -V, --version         print version information
-  -R, --recursive       Include subdirectories (disabled by default).
-  -T, --template <file> Use HTML file as template.
+  --version             show program's version number and exit
+  -h, --help            show this help message and exit
+  -R, --recursive       Include subdirectories [default: False]
+  -T TEMPLATE, --template=TEMPLATE
+                        Use HTML file as template
+
+ATTENTION:  Script will overwrite any existing index.html file(s)!
 
 
 Example: 
@@ -77,6 +88,11 @@ I have used icons from [http://www.famfamfam.com/lab/icons/silk/ famfamfam's "Si
   * Tommy MacWilliam - introduced template system
 
 = Changelog =
+
+0.4.2
+  * nothing has changed in how the scripts works but...
+  * added `easy_install` / `pip` support and uploaded package to PyPI
+  * using `optparse` for commandline options
 
 0.4.1
   * minor bugfix - fixed invalid script's homepage url (thanks RooToor!)
